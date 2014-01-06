@@ -49,14 +49,14 @@ describe('DeviseModal', function () {
                 var user = {email: 'test@test.com'};
                 input('user.email').enter(user.email);
                 submit();
-                expect(response(1)).toEqual(json(user));
+                expect(response(2)).toEqual(json(user));
             });
 
             it('allows me to authenticate with password', function() {
                 var user = {password: 'testtest'};
                 input('user.password').enter(user.password);
                 submit();
-                expect(response(1)).toEqual(json(user));
+                expect(response(2)).toEqual(json(user));
             });
 
             it('retries a request after login', function() {
@@ -64,7 +64,7 @@ describe('DeviseModal', function () {
                 input('user.email').enter(user.email);
                 input('user.password').enter(user.password);
                 submit();
-                expect(response(2)).toEqual(json({reqNum: 1, user: user}));
+                expect(response(1)).toEqual(json({reqNum: 1, user: user}));
             });
 
             it('rejects request promise on dismiss', function() {
@@ -79,8 +79,8 @@ describe('DeviseModal', function () {
                     input('user.email').enter(user.email);
                     input('user.password').enter(user.password);
                     submit();
-                    expect(response(2)).toEqual(json({reqNum: 1, user: user}));
-                    expect(response(3)).toEqual(json({reqNum: 2, user: user}));
+                    expect(response(1)).toEqual(json({reqNum: 1, user: user}));
+                    expect(response(2)).toEqual(json({reqNum: 2, user: user}));
                 });
 
                 it('rejects all requests on dismiss', function() {

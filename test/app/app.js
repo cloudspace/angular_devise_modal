@@ -36,7 +36,7 @@ angular.module('testApp', ['DeviseModal', 'ui.bootstrap', 'ngRoute']).
     // Make Auth.login() write to our reponses.
     var _login = Auth.login;
     Auth.login = function() {
-        return _login.apply(this, arguments).then(set, set);
+        return _login.apply(this, arguments).then(set(++reqNum));
     };
 
     addUserToRequest = function(data) {
@@ -47,8 +47,10 @@ angular.module('testApp', ['DeviseModal', 'ui.bootstrap', 'ngRoute']).
     };
     $scope.responses = [];
 
-    function set(data) {
-        $scope.responses.push(data);
+    function set(num) {
+        return function(data) {
+            $scope.responses[num - 1] = data;
+        };
     }
     function failParse(data) {
         data = parse(data);
@@ -67,11 +69,11 @@ angular.module('testApp', ['DeviseModal', 'ui.bootstrap', 'ngRoute']).
     };
     $scope.request = function() {
         $http.post('/unauth', {reqNum: ++reqNum}).
-            then(parse, failParse).then(set);
+            then(parse, failParse).then(set(reqNum));
     };
     $scope.requestRestricted = function() {
         $http.post('/auth', {reqNum: ++reqNum}).
-            then(parse, failParse).then(set);
+            then(parse, failParse).then(set(reqNum));
     };
 });
 
