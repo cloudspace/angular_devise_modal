@@ -54,7 +54,7 @@ modal. The only requirements are:
  3. The dismiss button calls the `dismiss()` function.
 
 ```html
-<script type="text/ng-template" id="modal.html">
+<script type="text/ng-template" id="deviseModal.html">
     <div class="" id="loginModal">
         <div class="modal-body">
             <div class="well">
@@ -84,7 +84,7 @@ modal. The only requirements are:
 ```javascript
 angular.module('DeviseModal').
     run(function($templateCache) {
-        $templateCache.put('modal.html', '<div>Modal Template</div>');
+        $templateCache.put('deviseModal.html', '<div>Modal Template</div>');
     });
 ```
 

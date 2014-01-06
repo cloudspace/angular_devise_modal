@@ -36,7 +36,7 @@ deviseModal.run(function($modal, $http, Auth, $rootScope) {
             // the user. Chaining onto this promise will then
             // run after the user logs in.
             promise = $modal.open({
-                templateUrl: 'modal.html',
+                templateUrl: 'deviseModal.html',
                 controller: function ($scope, $modalInstance) {
                     var user = $scope.user = {};
                     $scope.login = function () {
