@@ -137,6 +137,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test:unit', ['ngtemplates', 'karma:unit']);
     grunt.registerTask('test:e2e', ['ngtemplates', 'connect:e2e', 'karma:e2e']);
     grunt.registerTask('test', ['test:e2e']);
+    grunt.registerTask('server', ['connect:e2e:keepalive']);
 
     grunt.registerTask('default', ['jshint:devise', 'test', 'ngtemplates', 'preprocess', 'ngmin', 'uglify']);
 
