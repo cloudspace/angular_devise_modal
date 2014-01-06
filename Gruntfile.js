@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                 '// Distributed under MIT license\n' +
                 '//\n' +
                 '// https://github.com/cloudspace/angular_devise_modal\n' +
-                '\n'
+            '\n'
         },
 
         preprocess: {
@@ -62,14 +62,11 @@ module.exports = function(grunt) {
         },
 
         karma: {
-            options: {
-                configFile: 'karma.conf.js',
-                browsers: ['PhantomJS']
-            },
             unit: {
+                configFile: 'karma.conf.js'
             },
-            continuous: {
-                singleRun: false
+            e2e: {
+                configFile: 'karma-e2e.conf.js'
             }
         },
 
@@ -93,6 +90,45 @@ module.exports = function(grunt) {
                     }
                 }
             }
+        },
+
+        connect: {
+            options: {
+                port: 9000,
+                // Change this to '0.0.0.0' to access the server from outside.
+                hostname: 'localhost'
+            },
+            e2e: {
+                options: {
+                    base: [
+                        '.tmp',
+                        'src',
+                        'test/app',
+                        'test/support'
+                    ],
+                    middleware: function(connect, options) {
+                        var middleware = options.base.map(function(b) {
+                            return connect.static(b);
+                        });
+                        middleware.push(function(req, res) {
+                            res.statusCode = 200;
+                            var data = '';
+                            req.on('data', function(chunk) {
+                                data += chunk.toString();
+                            });
+                            req.on('end', function() {
+                                var user = data && (user = JSON.parse(data)) && user.user;
+                                var isAuthenticated = (user && Object.keys(user).length > 0);
+                                if (!isAuthenticated && req.url === '/auth' && req.method === 'POST') {
+                                    res.statusCode = 401;
+                                }
+                                res.end(data || '');
+                            });
+                        });
+                        return middleware;
+                    }
+                }
+            }
         }
     });
 
@@ -101,10 +137,10 @@ module.exports = function(grunt) {
 
     // Default task.
     grunt.registerTask('lint-test', 'jshint:test');
-    grunt.registerTask('test', function(type) {
-        type = type || 'unit';
-        grunt.task.run('karma:' + type);
-    });
+    grunt.registerTask('test:unit', ['ngtemplates', 'karma:unit']);
+    grunt.registerTask('test:e2e', ['ngtemplates', 'connect:e2e', 'karma:e2e']);
+    grunt.registerTask('test', ['test:e2e']);
+
     grunt.registerTask('default', ['jshint:devise', 'test', 'ngtemplates', 'preprocess', 'ngmin', 'uglify']);
 
 };

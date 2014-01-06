@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" ng-app="testApp">
+    <head>
+        <meta charset="utf-8">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="main" role="main" ng-view></div>
+
+        <script src="/angular/angular.js"></script>
+        <script src="/angular-devise/lib/devise.js"></script>
+        <script src="/angular-bootstrap/ui-bootstrap.js"></script>
+        <script src="/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="/angular-route/angular-route.js"></script>
+
+        <script>
+            var deviseModal = angular.module('DeviseModal', ['Devise', 'ui.bootstrap.modal']);
+        </script>
+        <script src="/modal.js"></script>
+        <script src="/template.js"></script>
+
+        <script src="app.js"></script>
+    </body>
+</html>
