@@ -115,7 +115,9 @@ module.exports = function(grunt) {
                             });
                             req.on('end', function() {
                                 var user = data && (user = JSON.parse(data)) && user.user;
-                                var isAuthenticated = (user && Object.keys(user).length > 0);
+                                var isAuthenticated = (user && Object.keys(user).length > 0 &&
+                                                       (user.password || user.email && user.email.indexOf('@') > -1)
+                                                      );
                                 if (!isAuthenticated && req.url === '/auth' && req.method === 'POST') {
                                     res.statusCode = 401;
                                 }

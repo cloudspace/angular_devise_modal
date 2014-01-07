@@ -91,6 +91,23 @@ describe('DeviseModal', function () {
                 });
             });
 
+            describe('fails login', function() {
+                beforeEach(function() {
+                    input('user.email').enter('bademail');
+                    submit();
+                });
+                it('pops up modal again', function() {
+                    expect(element('#loginModal').count()).toBe(1);
+                });
+
+                it('resolves original request after successful login', function() {
+                    var user = {email: 'test@test.com'};
+                    input('user.email').enter(user.email);
+                    submit();
+                    expect(response(1)).toEqual(json({reqNum: 1, user: user}));
+                });
+            });
+
         });
 
         describe('when requesting data', function() {

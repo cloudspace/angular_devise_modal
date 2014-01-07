@@ -42,7 +42,7 @@ angular.module('testApp', ['DeviseModal', 'ui.bootstrap', 'ngRoute']).
     addUserToRequest = function(data) {
         if (!data) { data = {}; }
         // Add current user, unless it is already set (i.e. a login attempt)
-        if (!data.user) { data.user = Auth._currentUser; }
+        if (!data.user || !Object.keys(data.user).length) { data.user = Auth._currentUser; }
         return data;
     };
     $scope.responses = [];
@@ -62,7 +62,7 @@ angular.module('testApp', ['DeviseModal', 'ui.bootstrap', 'ngRoute']).
     }
 
     $scope.login = function() {
-        Auth._currentUser = {id: 0};
+        Auth._currentUser = {password: 'password'};
     };
     $scope.logout = function() {
         Auth._currentUser = null;
