@@ -56,6 +56,10 @@ modal. The only requirements are:
 ```html
 <script type="text/ng-template" id="deviseModal.html">
     <div class="" id="loginModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="dismiss()">x</button>
+            <h3>Have an Account?</h3>
+        </div>
         <div class="modal-body">
             <div class="well">
                 <form name="loginForm">
